@@ -1,13 +1,23 @@
 /*
 :root {
   /* ---- Main colors ---- */
-  
-  /* ---- Borders ---- 
+
+/* ---- Borders ---- 
 }
 
 */
 
 
-header {
-  border: 1px solid black;
+/* ---- General ----*/
+.display-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-height: 10vh;
+}
+
+
+/* --- index.html ----*/
+.client-list {
+  padding-top: 12vh;
 }

@@ -1,12 +1,17 @@
-/*
 :root {
-  /* ---- Main colors ---- */
+  /* Colors*/
+  --background: #f1f2f6;
 
-/* ---- Borders ---- 
+  /* Shadows */
+  --boxShadow_btn: 2px 2px 2px rgb(127 137 161 / 30%);
+  --boxShadow: 0px 0px 10px 2px rgb(0 0 0 / 5%);
 }
 
-*/
 
+body {
+  background-color: var(--background);
+  /* color: #fff; */
+}
 
 /* ---- General ----*/
 .display-flex {
@@ -18,6 +23,28 @@
 
 
 /* --- index.html ----*/
-.client-list {
+.main-section {
   padding-top: 12vh;
+  max-width: 550px;
+}
+
+.enter-section {
+  background-color: #fff;
+
+  box-shadow: var(--boxShadow);
+  border-radius: 0.25rem;
+  padding: 3em 5em;
+}
+
+@media (max-width:551px) {
+  .enter-section {
+    padding: 2em 2.5em;
+  }
+}
+
+
+.enterBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

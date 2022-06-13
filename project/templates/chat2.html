@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<section class="client-list">
+  <div class="display-flex">
+    <div class="page-title">
+      <h4>chat</h4>
+    </div>
+  </div>
+
+  <div class="display-flex">
+    <div class="chat">
+      <div class="login">
+        <label for="">username</label>
+        <input type="text" id="username">
+        <button id="login">entrar</button>
+      </div>
+      
+    </div>
+  </div>    
+
+  <div class="display-flex">
+    <div class="form">
+      <form>
+        <input id="idUser" type="text" placeholder="nome">
+        <input id="sendMsg" type="text" placeholder="msg">
+        <button type="submit">enviar</button>
+      </form>
+    </div>
+    
+  </div>
+
+
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  //var socket = io('http://192.168.2.7:8000');
+  var socket = io.connect('http://' + document.domain + ':' + location.port);
+  const uId = socket.id
+
+  //connect action
+  socket.on('connect',  () => {
+    socket.emit('connected', {uId: socket.id });
+  });
+
+  var private_socket = io('http://' + document.domain + ':' + location.port + '/private');
+  $('#login').on('click', () => {
+    private_socket.emit('username', $('#username').val() )
+  });
+    
+
+  /*
+  $('form').submit(e => {
+    e.preventDefault();
+
+    socket.emit('sendMessage', {name: event.target[0].value, message:event.target[1].value})
+
+  })
+  */
+
+</script>
+
+
+{% endblock %}

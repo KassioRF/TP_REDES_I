@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <section class="enter main-section container">
+    <div class="display-flex">
+      <div class="page-title">
+        <h3>Entrar</h3>
+      </div>
+    </div>
+
+
+
+    <div class="enter-section">
+      <div class="form-floating mb-3">
+        <input id="username" type="text" class="form-control">
+        <label for="username">Nome</label>
+      </div>
+
+      <div class="mb-3 enterBtn">
+        <button id="enterBtn" type="button" class="btn btn-dark">Entrar</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    
+    var enter_socket = io('http://' + document.domain + ':' + location.port + '/enter');
+
+    $("#enterBtn").on('click', e => {
+      if (!$('#username').val()) {
+        alert('Insira um nome para entrar');
+      }else {
+        enter_socket.emit('username', $('#username').val());
+      }
+    
+    });
+
+    enter_socket.on('enter', msg => {
+      alert(msg)
+      window.location = msg.url;
+    });
+
+    enter_socket.on('enter_error', msg => {
+      alert(msg);
+      $('#username').val("");
+    });
+
+  </script>
+
+
+{% endblock %}

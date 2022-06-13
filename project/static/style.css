@@ -60,6 +60,12 @@ nav {
 }
 
 /* The navigation menu links */
+.user-icon {
+  font-size: 10pt !important;
+  padding-right: 5px;
+  color: #18A558;
+}
+
 .sidenav .user-list {
   cursor: pointer;
   padding: 6px 8px 6px 16px;
@@ -67,6 +73,7 @@ nav {
   font-size: 15pt;
   display: block;
 
+  margin-left: 2px;
   margin-right: 2px;
   background-color: var(--background);
   border-bottom: 1px solid #d9d9d9;

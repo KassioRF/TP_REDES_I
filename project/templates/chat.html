@@ -3,62 +3,34 @@
 {% block content %}
   <section class="enter chat-section">
     <div class="sidenav">
-      <span class="client-hello">Olá, {{username}} </span>
+      <span class="client-hello">Olá {{username}}! </span>
       <p class="room-title"> Sala </p>
 
-      {% for c in clients %}
-        <span class="user-list">{{c}}</span>
-      {% endfor %}
-      <!--
-      <span class="user-list"> kassio </span>
-      <span class="user-list"> joao </span>
-      <span class="user-list"> pedro </span>
-      <span class="user-list"> admin </span>
-      -->
+      <div id="user-list-el">
+        {% for c in clients %}
+          <span class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} </span>
+        {% endfor %}
+      </div>
     
     </div>
 
-    <!--
-    <div class="row">
-    
-      <div class="col-3">
-        <p>Sala</p>
-      </div>
-      
-      <div class="col-9">
-          {{clients}}      
-      </div>
-    
-    </div> 
-    -->
-
-  
   </section>
   
   <script>
+    function update_lobby(newClient) {
+      $("#user-list-el").append(`<span class="user-list"><span class="user-icon far fa-dot-circle"></span> ${newClient} </span>`);
+    }
+
+
     var socket = io.connect('http://' + document.domain + ':' + location.port);
     
     var lobby_socket = io('http://' + document.domain + ':' + location.port + '/lobby')
 
     lobby_socket.on('update', data => {
-      alert(data.clients);
+      //alert(data.clients);
+      update_lobby(data.newClient);
     });
 
-    /*
-    $("#enterBtn").on('click', e => {
-      if (!$('#username').val()) {
-        alert('Insira um nome para entrar');
-      }else {
-        socket.emit('username', $('#username').val());
-      }
-    
-    });
-
-    socket.on('enter_error', msg => {
-      alert(msg);
-      $('#username').val("");
-    });
-    */
   </script>
 
 

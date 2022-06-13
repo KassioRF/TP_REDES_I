@@ -59,13 +59,22 @@ def enter(username):
         )
 
         # time.sleep(1)
-
-        io.emit("update", {"clients": clients}, namespace="/lobby")
+        room_clients = list(clients.keys())
+        room_clients.remove(username)
+        io.emit(
+            "update",
+            {"newClient": username},
+            namespace="/lobby",
+            broadcast=True,
+        )
 
     else:
         print(f"\n\t --- EMIT FAIL ---\n\t")
         io.emit(
-            "enter_error", "O Nome já está sendo usado, tente outro", namespace="/enter"
+            "enter_error",
+            "O Nome já está sendo usado, tente outro",
+            namespace="/enter",
+            room=request.sid,
         )
 
     print(clients)

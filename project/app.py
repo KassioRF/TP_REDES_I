@@ -82,9 +82,8 @@ if __name__ == "__main__":
 """
 
 1) Enviar uma msg privada pra cada cliente
-2) Listar clientes na interface
-3) enviar msgs únicas p cada cliente
-4) Fazer menu de entrada no lobby*
+2) Listar clientes na interface ok!
+4) Fazer menu de entrada no lobby* ok !
 
 5) ajustar layout e templates
 

@@ -27,11 +27,17 @@
     }
 
     var socket = io.connect('http://' + document.domain + ':' + location.port);
-    var lobby_socket = io('http://' + document.domain + ':' + location.port + '/lobby')
+    var lobby_socket = io('http://' + document.domain + ':' + location.port + '/lobby');
 
     lobby_socket.on('update', data => {
       update_lobby(data.clients);      
     });
+
+    //@TODO disconectar quando fechar o browser e atualizar o lobby
+    // handle disconnect
+    window.onbeforeunload = function () {
+      lobby_socket.emit('client_disconnect', {'username': "{{username}}");
+    }
 
   </script>
 

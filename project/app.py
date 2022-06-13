@@ -28,6 +28,8 @@ def chat(username):
         # Garante que só sejam redirecionados para página de msg quem está na lista de clientes
         return redirect(url_for("index"))
 
+    # update sId
+
     room_clients = list(clients.keys())
     room_clients.remove(username)
 
@@ -58,12 +60,10 @@ def enter(username):
             room=clients[username],
         )
 
-        # time.sleep(1)
-        room_clients = list(clients.keys())
-        room_clients.remove(username)
+        time.sleep(1)
         io.emit(
             "update",
-            {"newClient": username},
+            {"clients": list(clients.keys())},
             namespace="/lobby",
             broadcast=True,
         )

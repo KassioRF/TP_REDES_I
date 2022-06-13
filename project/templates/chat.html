@@ -17,18 +17,20 @@
   </section>
   
   <script>
-    function update_lobby(newClient) {
-      $("#user-list-el").append(`<span class="user-list"><span class="user-icon far fa-dot-circle"></span> ${newClient} </span>`);
+    function update_lobby(clients) {
+      $("#user-list-el").html("");
+      clients.forEach(c => {
+        if (c != "{{username}}") {
+          $("#user-list-el").append(`<span class="user-list"><span class="user-icon far fa-dot-circle"></span> ${c} </span>`);
+        }
+      });
     }
 
-
     var socket = io.connect('http://' + document.domain + ':' + location.port);
-    
     var lobby_socket = io('http://' + document.domain + ':' + location.port + '/lobby')
 
     lobby_socket.on('update', data => {
-      //alert(data.clients);
-      update_lobby(data.newClient);
+      update_lobby(data.clients);      
     });
 
   </script>

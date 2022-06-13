@@ -28,7 +28,10 @@ def chat(username):
         # Garante que só sejam redirecionados para página de msg quem está na lista de clientes
         return redirect(url_for("index"))
 
-    return render_template("chat.html", clients=clients)
+    room_clients = list(clients.keys())
+    room_clients.remove(username)
+
+    return render_template("chat.html", username=username, clients=room_clients)
 
 
 # @app.route("/")
@@ -49,7 +52,10 @@ def enter(username):
         # redirect(url_for("chat", username=username))
         print(f"\n\t --- EMIT ---\n\t")
         io.emit(
-            "enter", {"url": url_for("chat", username=username)}, namespace="/enter"
+            "enter",
+            {"url": url_for("chat", username=username)},
+            namespace="/enter",
+            room=clients[username],
         )
 
         # time.sleep(1)

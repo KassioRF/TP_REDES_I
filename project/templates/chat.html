@@ -2,11 +2,39 @@
 
 {% block content %}
   <section class="enter chat-section">
-    <p>{{clients}}</p>
+    <div class="sidenav">
+      <span class="client-hello">Olá, {{username}} </span>
+      <p class="room-title"> Sala </p>
+
+      {% for c in clients %}
+        <span class="user-list">{{c}}</span>
+      {% endfor %}
+      <!--
+      <span class="user-list"> kassio </span>
+      <span class="user-list"> joao </span>
+      <span class="user-list"> pedro </span>
+      <span class="user-list"> admin </span>
+      -->
+    
+    </div>
+
+    <!--
+    <div class="row">
+    
+      <div class="col-3">
+        <p>Sala</p>
+      </div>
+      
+      <div class="col-9">
+          {{clients}}      
+      </div>
+    
+    </div> 
+    -->
 
   
   </section>
-
+  
   <script>
     var socket = io.connect('http://' + document.domain + ':' + location.port);
     

@@ -13,6 +13,90 @@ body {
   /* color: #fff; */
 }
 
+nav {
+  z-index: 999;
+}
+
+
+/* The sidebar menu */
+.sidenav {
+  height: 100%;
+  /* Full-height: remove this if you want "auto" height */
+  width: 160px;
+  /* Set the width of the sidebar */
+  position: fixed;
+  /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  /* Stay at the top */
+  left: 0;
+  background-color: #282c30;
+  /* Black */
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+  padding-top: 5em;
+}
+
+.sidenav .client-hello {
+  color: var(--background);
+  padding-left: 6px;
+}
+
+.sidenav .room-title {
+  color: var(--background);
+  padding: 6px 8px 6px 16px;
+  font-size: 20pt;
+
+}
+
+.sidenav .room-title::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #818181;
+  position: absolute;
+}
+
+/* The navigation menu links */
+.sidenav .user-list {
+  cursor: pointer;
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15pt;
+  display: block;
+
+  margin-right: 2px;
+  background-color: var(--background);
+  border-bottom: 1px solid #d9d9d9;
+
+  /* margin: 0.5em 0; */
+  /* color: #818181; */
+  /* border-radius: 0.25rem; */
+  /* border: 1px solid tomato; */
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav span:hover {
+  color: #212529;
+  background-color: #d9d9d9;
+}
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+/* ==================================== end sidebar ===============================*/
+
 /* ---- General ----*/
 .display-flex {
   display: flex;

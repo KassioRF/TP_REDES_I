@@ -15,10 +15,6 @@ clients = {}
 
 @app.route("/")
 def index():
-    # return "<p>Hello, World!</p>"
-    print("\n\t - index")
-    print(clients)
-    print("\n\t - --")
     return render_template("enter.html")
 
 
@@ -34,11 +30,6 @@ def chat(username):
     room_clients.remove(username)
 
     return render_template("chat.html", username=username, clients=room_clients)
-
-
-# @app.route("/")
-# def chat():
-#     return render_template("enter.html")
 
 
 # @TODO adicionar o nome do cliente na lista
@@ -79,6 +70,10 @@ def enter(username):
 
     print(clients)
 
+
+# @TODO Disconnect
+
+# @TODO private messages
 
 if __name__ == "__main__":
     io.run(app, debug=True, host="0.0.0.0", port=8000)

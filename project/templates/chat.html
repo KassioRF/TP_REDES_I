@@ -10,14 +10,17 @@
 
           <div id="user-list-el">
             {% for c in clients %}
-              <span class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} </span>
+              <span id="{{c}}" class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} </span>
             {% endfor %}
           </div>
         </div>
       </div>
       
-      <div class="col-9">
-        <div class="chat-window">
+
+      <!-- Construir janelas de conversas -->
+      <div id="chat-area" class="col-9">
+      
+        <div id="chat-window" class="chat-window" data="client">
           <div class="chat-header">
             <h5>Client</h5>
           </div>
@@ -33,6 +36,8 @@
               <p class="text-muted msg-hour">22:16</p>
             </div>
 
+
+
           </div>
 
           <div class="chat-sender">
@@ -43,11 +48,14 @@
           </div>
 
         </div>
+      
       </div>
     
     </div>
   </section>
   
+  
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
   <script>
     /*--- Inicializa conexão via socket ----- */
     var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -62,11 +70,14 @@
     lobby_socket.on('update', data => {
       update_lobby(data.clients, username);      
     });
-
     //informa o servidor que o cliente desconectou
     window.onbeforeunload = function() {
-
       lobby_socket.emit('disconnect');
+    }
+
+    function send_message(client) {
+      data = get_msg_data("conteudo do input, mais id user");
+      lobby_socket.emit('send_messaage');
     }
 
 

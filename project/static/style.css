@@ -140,6 +140,7 @@ nav {
 
 .chat-body {
   height: 70vh;
+  overflow: auto;
 }
 
 .chat-body .chat-msg {

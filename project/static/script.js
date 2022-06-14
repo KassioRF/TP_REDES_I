@@ -33,7 +33,7 @@ function open_chat_window(client) {
 
     //adiciona evento de enviar p/ client
     document.getElementById(`send;${client}`).addEventListener('click', e => {
-      //@TODO pegar msg e chamar evento de envio!
+      send_message(client);
     });
 
   } else {

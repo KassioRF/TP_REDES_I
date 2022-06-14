@@ -55,7 +55,7 @@
   </section>
   
   
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  
   <script>
     /*--- Inicializa conexão via socket ----- */
     var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -70,18 +70,27 @@
     lobby_socket.on('update', data => {
       update_lobby(data.clients, username);      
     });
+    
+    /*---- envia msg para um cliente do lobby ----*/
+    function send_message(client) {
+      msg = $(`[data-send="${client}"]`).val();
+      console.log(msg);
+      lobby_socket.emit('send_message', {'client': client, 'message': msg});
+    }
+
+    /*---- Trata as msgs recebidas pelo cliente  ----*/
+    lobby_socket.on('new_message', msg => {
+      alert(msg);
+    });
+
+    
+
     //informa o servidor que o cliente desconectou
     window.onbeforeunload = function() {
       lobby_socket.emit('disconnect');
     }
 
-    function send_message(client) {
-      data = get_msg_data("conteudo do input, mais id user");
-      lobby_socket.emit('send_messaage');
-    }
-
-
-  </script>
-
+  </script>  
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 {% endblock %}

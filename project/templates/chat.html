@@ -1,24 +1,51 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <section class="enter chat-section">
-    <div class="col-3">
-      <div class="sidenav">
-        <span class="client-hello">Olá {{username}}! </span>
-        <p class="room-title"> Sala </p>
+  <section class="enter chat-section container-fluid">
+    <div class="row" style="">
+      <div class="col-3">
+        <div class="sidenav">
+          <span class="client-hello">Olá {{username}}! </span>
+          <p class="room-title"> Sala </p>
 
-        <div id="user-list-el">
-          {% for c in clients %}
-            <span class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} </span>
-          {% endfor %}
+          <div id="user-list-el">
+            {% for c in clients %}
+              <span class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} </span>
+            {% endfor %}
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div class="col-8">
-      <h1>Hello</h1>
-    </div>
+      
+      <div class="col-9">
+        <div class="chat-window">
+          <div class="chat-header">
+            <h5>Client</h5>
+          </div>
 
+          <div class="chat-body">
+            <div class="chat-msg client-msg">
+              <p> client msg </p>
+              <p class="text-muted msg-hour">22:14</p>
+            </div>
+
+            <div class="chat-msg your-msg">
+              <p> your msg </p>
+              <p class="text-muted msg-hour">22:16</p>
+            </div>
+
+          </div>
+
+          <div class="chat-sender">
+            <div class="input-group">
+              <button class="input-group-text"><span class="fas fa-paper-plane"></span></button>
+              <textarea class="form-control" aria-label=""></textarea>
+            </div>            
+          </div>
+
+        </div>
+      </div>
+    
+    </div>
   </section>
   
   <script>

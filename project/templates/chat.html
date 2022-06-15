@@ -78,6 +78,7 @@
       msg = $(`[data-send="${client}"]`).val();
 
       console.log(msg);
+      
       lobby_socket.emit('send_message', {'client': client, 'message': msg, 'date': date});
       
       //exibe a mensagem enviada no chat

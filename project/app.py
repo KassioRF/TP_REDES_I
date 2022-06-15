@@ -19,6 +19,7 @@ def get_clientIp(request):
 
 @app.route("/")
 def index():
+    print(f"\n\t ---- {get_clientIp(request)} ---- \n")
     return render_template("enter.html")
 
 
@@ -102,7 +103,7 @@ def send_message(data):
 
 
 if __name__ == "__main__":
-    io.run(app, debug=False, host="0.0.0.0", port=8000)
+    io.run(app, debug=False, host="0.0.0.0", port=1997)
 
 
 """

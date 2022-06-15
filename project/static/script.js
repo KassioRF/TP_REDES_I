@@ -1,6 +1,8 @@
 
 var chat_area = document.getElementById('chat-area');
-var open_chats = [];
+var open_chats = {};
+
+
 console.log(chat_area);
 /** Adiciona evento de click nos clientes carregados no inicio da sessão*/
 $('.user-list').on('click', e => {
@@ -29,7 +31,13 @@ function open_chat_window(client) {
   if (el.length == 0) {
     // cria uma nova janela
     chat_area.innerHTML = '';
-    chat_area.append(build_chat_view(client));
+
+    chat_window = build_chat_view(client);
+
+
+    //atualiza a lista de chats em atividade
+    open_chats[client] = chat_window;
+    chat_area.append(chat_window);
 
     //adiciona evento de enviar p/ client
     document.getElementById(`send;${client}`).addEventListener('click', e => {
@@ -70,5 +78,47 @@ function build_chat_view(client) {
   window_.appendChild(sender);
 
   return window_;
+
+}
+
+
+function append_msg(client, msg, date, type) {
+  //verifica se já existe um chat aberto, caso contrário é necessário criar o elemento
+  console.log(client);
+  if (!open_chats[client]) {
+    console.log('não tem chat');
+    return -1;
+  }
+
+
+
+
+  let msgEl = create_msg_element(msg, date, type);
+
+  console.log(client);
+  console.log(open_chats[client]);
+
+  open_chats[client].querySelector('.chat-body').append(msgEl);
+
+}
+
+function create_msg_element(msg_, date_, type) {
+  let msgType = type == 'send' ? 'your-msg' : 'client-msg';
+
+  let div = document.createElement('div');
+  let msg = document.createElement('p');
+  let date = document.createElement('p');
+
+  div.className = 'chat-msg ' + msgType;
+  msg.innerHTML = msg_;
+
+  date.className = "text-muted msg-hour";
+  date.innerHTML = date_;
+
+  div.append(msg);
+  div.append(date);
+
+  return div;
+
 
 }

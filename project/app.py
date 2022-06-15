@@ -92,8 +92,13 @@ def enter(username):
 # Trata o envio de mensagens
 @io.on("send_message", namespace="/lobby")
 def send_message(data):
+    username = [k for k, v in clients.items() if v == request.sid][0]
 
-    emit("new_message", data["message"], room=clients[data["client"]])
+    emit(
+        "new_message",
+        {"client": username, "msg": data["message"], "date": data["date"]},
+        room=clients[data["client"]],
+    )
 
 
 if __name__ == "__main__":

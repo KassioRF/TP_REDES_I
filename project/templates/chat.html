@@ -26,6 +26,7 @@
           </div>
 
           <div class="chat-body">
+            
             <div class="chat-msg client-msg">
               <p> client msg </p>
               <p class="text-muted msg-hour">22:14</p>
@@ -73,14 +74,22 @@
     
     /*---- envia msg para um cliente do lobby ----*/
     function send_message(client) {
+      date = `${String(new Date().getHours()).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')}`;
       msg = $(`[data-send="${client}"]`).val();
+
       console.log(msg);
-      lobby_socket.emit('send_message', {'client': client, 'message': msg});
+      lobby_socket.emit('send_message', {'client': client, 'message': msg, 'date': date});
+      
+      //exibe a mensagem enviada no chat
+      append_msg(client, msg, date, 'send');
+      
+      $(`[data-send="${client}"]`).val("");
     }
 
     /*---- Trata as msgs recebidas pelo cliente  ----*/
-    lobby_socket.on('new_message', msg => {
-      alert(msg);
+    lobby_socket.on('new_message', data => {
+      //alert(msg);
+      append_msg(data.client, data.msg, data.date, 'recieve');
     });
 
     

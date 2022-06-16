@@ -1,5 +1,10 @@
 # TP_REDES_I
 
+
+## Requisitos:
+
+ - Python v3.10+
+
 ## Instalando dependências:
 
 Recomendo utilizar um ambiente virtual para evitar incompatibilidades de versões de pacotes e etc. 

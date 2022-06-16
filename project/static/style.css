@@ -140,21 +140,24 @@ nav {
   padding-top: 1em;
   margin-top: 1em;
   padding-left: 1em;
+  padding-bottom: 0.25em;
 }
 
 .chat-body {
   height: 70vh;
   overflow: auto;
+  background-color: white;
 }
 
 .chat-body .chat-msg {
   /* border: 1px solid tomato; */
-  background-color: #fff;
+  background-color: white;
   margin: 0.5em 0.5em 0.5em 2.5em;
   padding: 0.1em 1em;
   border-radius: 0.75em;
   border-style: outset;
   border-width: 0.01em;
+  border: 1px solid darkgray;
 
 }
 
@@ -173,7 +176,10 @@ nav {
 
 /* --- tests ---*/
 .chat-window>div {
-  border: 1px solid gray
+  /* border: 1px solid gray; */
+  border-radius: .25rem;
+  box-shadow: var(--boxShadow);
+
 }
 
 

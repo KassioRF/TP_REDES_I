@@ -52,7 +52,7 @@ def disconnect():
     if clients:
         io.emit(
             "update",
-            {"clients": list(clients.keys())},
+            {"clients": list(clients.keys()), "disconected": key},
             namespace="/lobby",
             broadcast=True,
         )

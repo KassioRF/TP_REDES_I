@@ -18,39 +18,8 @@
       </div>
       
 
-      <!-- Construir janelas de conversas -->
       <div id="chat-area" class="col-9">
-      
-        <div id="chat-window" class="chat-window" data="client">
-          <div class="chat-header">
-            <h5>Client</h5>
-          </div>
-
-          <div class="chat-body">
-            
-            <div class="chat-msg client-msg">
-              <p> client msg </p>
-              <p class="text-muted msg-hour">22:14</p>
-            </div>
-
-            <div class="chat-msg your-msg">
-              <p> your msg </p>
-              <p class="text-muted msg-hour">22:16</p>
-            </div>
-
-
-
-          </div>
-
-          <div class="chat-sender">
-            <div class="input-group">
-              <button class="input-group-text"><span class="fas fa-paper-plane"></span></button>
-              <textarea class="form-control" aria-label=""></textarea>
-            </div>            
-          </div>
-
-        </div>
-      
+        <!-- Construir janelas de conversas -->      
       </div>
     
     </div>
@@ -70,13 +39,19 @@
     
     /*--- recebe a atualização do servidor com a lista de usuários ativos ----*/
     lobby_socket.on('update', data => {
-      update_lobby(data.clients, username);      
+      update_lobby(data.clients, username);   
+      if (data.disconected){
+        remove_client(data.disconected);
+      }
     });
     
     /*---- envia msg para um cliente do lobby ----*/
     function send_message(client) {
       date = `${String(new Date().getHours()).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')}`;
       msg = $(`[data-send="${client}"]`).val();
+      if (msg == '') {
+        return 0;
+      }
 
       console.log('click');
       console.log(msg);
@@ -101,6 +76,11 @@
     window.onbeforeunload = function() {
       lobby_socket.emit('disconnect');
     }
+
+    //infor o cliente que um usuário desconectou
+    lobby_socket.on('disconnect_', data => {
+      console.log(`${data} disconnect`);
+    })
 
   </script>  
   <script src="{{ url_for('static', filename='script.js') }}"></script>

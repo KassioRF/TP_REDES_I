@@ -2,8 +2,6 @@
 var chat_area = document.getElementById('chat-area');
 var open_chats = {};
 
-
-console.log(chat_area);
 /** Adiciona evento de click nos clientes carregados no inicio da sessão*/
 $('.user-list').on('click', e => {
   open_chat_window(e.target.id);
@@ -33,14 +31,26 @@ function update_lobby(clients, username) {
     el.html('');
 
   });
+}
 
+/**Remove clientes que desconectaram */
+function remove_client(client) {
+  console.log('disconnect');
+  if (open_chats[client]) {
+    delete open_chats[client];
+  }
+
+  if (el = document.querySelector(`[data=${client}]`)) {
+    alert(`${client} saiu da sala`);
+    chat_area.innerHTML = '';
+  }
 }
 
 
 /** abre janela de chat */
 function open_chat_window(client) {
-  el = document.querySelectorAll(`[data=${client}]`);
-  if (el.length == 0) {
+  el = document.querySelector(`[data=${client}]`);
+  if (!el) {
     // cria uma nova janela
     chat_area.innerHTML = '';
 
@@ -55,10 +65,11 @@ function open_chat_window(client) {
       send_message(client);
     });
 
-  } else {
-    // abre a janela existente
-    console.log('retorna o chat existente');
   }
+  // else {
+  //   // abre a janela existente
+  //   console.log('retorna o chat existente');
+  // }
 }
 
 /** cria uma nova janela */
@@ -95,13 +106,8 @@ function build_chat_view(client) {
 
 function append_msg(client, msg, date, type) {
   //verifica se já existe um chat aberto, caso contrário é necessário criar o elemento
-  console.log(client);
   if (!open_chats[client]) {
-    console.log('não tem chat');
     open_chats[client] = build_chat_view(client);
-
-    console.log(open_chats[client].querySelector('button'));
-
   }
 
   let msgEl = create_msg_element(msg, date, type);
@@ -111,8 +117,7 @@ function append_msg(client, msg, date, type) {
 
   //notify
   el = document.querySelectorAll(`[data=${client}]`);
-  console.log('notify!');
-  console.log(el);
+
   if (el.length == 0) {
     //alert(`${client} new msg!`);
     notify_new_msg(client);
@@ -127,7 +132,6 @@ function notify_new_msg(client) {
   let qtd = el.attr('data-notify');
 
   if (qtd == '') {
-    console.log(qtd);
     qtd = 1;
   } else {
     qtd = parseInt(qtd) + 1;

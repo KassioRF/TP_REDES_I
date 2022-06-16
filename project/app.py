@@ -17,34 +17,36 @@ def get_clientIp(request):
     return f"{request.environ['REMOTE_ADDR']}:{request.environ['REMOTE_PORT']}"
 
 
+# página inicial
 @app.route("/")
 def index():
     print(f"\n\t ---- {get_clientIp(request)} ---- \n")
     return render_template("enter.html")
 
 
+# página do lobby
 @app.route("/<username>")
 def chat(username):
     if username not in clients.keys():
         # Garante que só sejam redirecionados para página de msg quem está na lista de clientes
         return redirect(url_for("index"))
 
-    # send lobby clients
+    # define a lista de clientes conectados no lobby
     room_clients = list(clients.keys())
     room_clients.remove(username)
 
     return render_template("chat.html", username=username, clients=room_clients)
 
 
+# Atualiza a porta do cliente que entrou no lobby
 @io.on("connect_lobby", namespace="/lobby")
 def connect(username):
-    # add client to lobby
     clients[username] = request.sid
 
 
+# Remove o cliente desconectado da lista de clientes ativos
 @io.on("disconnect", namespace="/lobby")
 def disconnect():
-    # Remove o cliente desconectado da lista de clientes ativos
     key = [k for k, v in clients.items() if v == request.sid][0]
     clients.pop(key)
 
@@ -58,6 +60,7 @@ def disconnect():
         )
 
 
+# Registra um novo cliente no servidor
 @io.on("username", namespace="/enter")
 def enter(username):
     if username not in clients.keys():
@@ -93,8 +96,10 @@ def enter(username):
 # Trata o envio de mensagens
 @io.on("send_message", namespace="/lobby")
 def send_message(data):
+    # obtem o usuario de origem
     username = [k for k, v in clients.items() if v == request.sid][0]
 
+    # envia a msg para o usuario de destino
     emit(
         "new_message",
         {"client": username, "msg": data["message"], "date": data["date"]},

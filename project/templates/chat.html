@@ -39,9 +39,8 @@
     /*--- atualiza conexão do cliente ----*/
     lobby_socket.emit('connect_lobby', "{{username}}");
     lobby_socket.on('client_room', data => {
-      console.log(data);
       $('#client_ip').html(data.ip)
-    })
+    });
     
     /*--- recebe atualizações do servidor com a lista de usuários ativos ----*/
     lobby_socket.on('update', data => {

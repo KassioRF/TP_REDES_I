@@ -113,7 +113,11 @@ if __name__ == "__main__":
 4) Fazer menu de entrada no lobby* ok !
 
 5) ajustar layout e templates
+================================
 
+# Resolver notificações chat
+# Adicionar IP e porta no login 
+# utilizar IP e porta no lugar do request.sid
 
 
 """

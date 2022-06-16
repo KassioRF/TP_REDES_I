@@ -60,6 +60,10 @@ nav {
   position: absolute;
 }
 
+.notify-dot {
+  font-size: 8pt;
+}
+
 /* The navigation menu links */
 .user-icon {
   font-size: 10pt !important;

@@ -10,7 +10,8 @@
 
           <div id="user-list-el">
             {% for c in clients %}
-              <span id="{{c}}" class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} </span>
+              <span id="{{c}}" class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} <span class="notify-dot badge bg-danger rounded-pill" data-notify=""></span> </span>
+              
             {% endfor %}
           </div>
         </div>
@@ -77,6 +78,7 @@
       date = `${String(new Date().getHours()).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')}`;
       msg = $(`[data-send="${client}"]`).val();
 
+      console.log('click');
       console.log(msg);
       
       lobby_socket.emit('send_message', {'client': client, 'message': msg, 'date': date});

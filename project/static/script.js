@@ -40,7 +40,6 @@ function update_lobby(clients_, username) {
 
 /**Remove clientes que desconectaram */
 function remove_client(client) {
-  console.log('disconnect');
   if (open_chats[client]) {
     delete open_chats[client];
   }
@@ -83,9 +82,6 @@ function build_chat_view(client) {
 
   window_.className = 'chat-window';
   window_.setAttribute('data', `${client}`);
-
-
-  console.log(clients_control);
 
   header.className = 'chat-header';
   header.innerHTML = `<h5> ${client} </h5> <span class="text-muted"> ${clients_control[client]}</span>`;

@@ -1,6 +1,8 @@
 
 var chat_area = document.getElementById('chat-area');
 var open_chats = {};
+var clients_control = clients ? clients : {};
+
 
 /** Adiciona evento de click nos clientes carregados no inicio da sessão*/
 $('.user-list').on('click', e => {
@@ -14,7 +16,10 @@ $('.user-list').on('click', e => {
 });
 
 /** Atualiza a lista a interface com clientes conectados */
-function update_lobby(clients, username) {
+function update_lobby(clients_, username) {
+  clients_control = clients_;
+
+  let clients = Object.keys(clients_);
   $("#user-list-el").html("");
   clients.forEach(c => {
     if (c != username) {
@@ -82,8 +87,11 @@ function build_chat_view(client) {
   window_.className = 'chat-window';
   window_.setAttribute('data', `${client}`);
 
+
+  console.log(clients_control);
+
   header.className = 'chat-header';
-  header.innerHTML = `<h5> ${client} </h5>`;
+  header.innerHTML = `<h5> ${client} </h5> <span class="text-muted"> ${clients_control[client]}</span>`;
 
   body.className = 'chat-body';
 

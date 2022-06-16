@@ -137,10 +137,12 @@ nav {
 .chat-header {
   background-color: var(--balckBg);
   color: #fff;
-  padding-top: 1em;
   margin-top: 1em;
-  padding-left: 1em;
-  padding-bottom: 0.25em;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem 1.5rem 0.25rem;
 }
 
 .chat-body {

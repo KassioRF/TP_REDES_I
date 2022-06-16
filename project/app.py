@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, url_for
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
 from flask import render_template
 import time
@@ -32,29 +32,43 @@ def chat(username):
         return redirect(url_for("index"))
 
     # define a lista de clientes conectados no lobby
-    room_clients = list(clients.keys())
-    room_clients.remove(username)
+    # room_clients = list(clients.keys())
+    room_clients = clients.copy()
+    room_clients.pop(username)
 
-    return render_template("chat.html", username=username, clients=room_clients)
+    return render_template(
+        "chat.html", username=username, ip=clients[username], clients=room_clients
+    )
+
+
+@io.on("connect", namespace="/enter")
+def return_ip():
+    room = get_clientIp(request)
+    join_room(room)
+    print(f"\n\t connect - {room} \n")
+    io.emit("ip", {"ip": room}, namespace="/enter", room=room)
 
 
 # Atualiza a porta do cliente que entrou no lobby
 @io.on("connect_lobby", namespace="/lobby")
 def connect(username):
-    clients[username] = request.sid
+    leave_room(clients[username])
+    join_room(get_clientIp(request))
+    clients[username] = get_clientIp(request)
 
 
 # Remove o cliente desconectado da lista de clientes ativos
 @io.on("disconnect", namespace="/lobby")
 def disconnect():
-    key = [k for k, v in clients.items() if v == request.sid][0]
+    key = [k for k, v in clients.items() if v == get_clientIp(request)][0]
     clients.pop(key)
 
     # Atualiza os clientes com a nova lista de pessoas conectadas no lobby
     if clients:
         io.emit(
             "update",
-            {"clients": list(clients.keys()), "disconected": key},
+            # {"clients": list(clients.keys()), "disconected": key},
+            {"clients": clients, "disconected": key},
             namespace="/lobby",
             broadcast=True,
         )
@@ -63,21 +77,23 @@ def disconnect():
 # Registra um novo cliente no servidor
 @io.on("username", namespace="/enter")
 def enter(username):
+    # join_room(get_clientIp(request))
     if username not in clients.keys():
-        clients[username] = request.sid
+        clients[username] = get_clientIp(request)
         # Redireciona o cliente para a página do lobby
         io.emit(
             "enter",
             {"url": url_for("chat", username=username)},
             namespace="/enter",
-            room=request.sid,
+            room=get_clientIp(request),
         )
 
         # Atualiza os clientes com a nova lista de pessoas conectadas no lobby
         print(f"\n\t --- update via broad cast client list on lobby---\n\t")
         io.emit(
             "update",
-            {"clients": list(clients.keys())},
+            # {"clients": list(clients.keys())},
+            {"clients": clients},
             namespace="/lobby",
             broadcast=True,
         )
@@ -89,7 +105,7 @@ def enter(username):
             "enter_error",
             "O Nome já está sendo usado, tente outro",
             namespace="/enter",
-            room=request.sid,
+            room=get_clientIp(request),
         )
 
 
@@ -97,7 +113,7 @@ def enter(username):
 @io.on("send_message", namespace="/lobby")
 def send_message(data):
     # obtem o usuario de origem
-    username = [k for k, v in clients.items() if v == request.sid][0]
+    username = [k for k, v in clients.items() if v == get_clientIp(request)][0]
 
     # envia a msg para o usuario de destino
     emit(
@@ -122,7 +138,7 @@ if __name__ == "__main__":
 
 # Resolver notificações chat
 # Adicionar IP e porta no login 
-# utilizar IP e porta no lugar do request.sid
+# utilizar IP e porta no lugar do get_clientIp(request)
 
 
 """

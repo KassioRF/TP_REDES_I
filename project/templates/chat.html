@@ -9,7 +9,7 @@
           <p class="room-title"> Sala </p>
 
           <div id="user-list-el">
-            {% for c in clients %}
+            {% for c in clients.keys() %}
               <span id="{{c}}" class="user-list"><span class="user-icon far fa-dot-circle"></span> {{c}} <span class="notify-dot badge bg-danger rounded-pill" data-notify=""></span> </span>
               
             {% endfor %}
@@ -33,6 +33,7 @@
     var lobby_socket = io('http://' + document.domain + ':' + location.port + '/lobby');
     /*--- nome do usuário cliente ----*/
     var username = {{username|tojson}};
+    var clients  = {{clients|tojson}};
 
     /*--- atualiza conexão do cliente ----*/
     lobby_socket.emit('connect_lobby', "{{username}}")
@@ -77,10 +78,6 @@
       lobby_socket.emit('disconnect');
     }
 
-    //infor o cliente que um usuário desconectou
-    lobby_socket.on('disconnect_', data => {
-      console.log(`${data} disconnect`);
-    })
 
   </script>  
   <script src="{{ url_for('static', filename='script.js') }}"></script>

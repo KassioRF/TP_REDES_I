@@ -15,6 +15,10 @@
         <input id="username" type="text" class="form-control">
         <label for="username">Nome</label>
       </div>
+      <div class="mb-3">
+        <label for="">ip:porta</label>
+        <input id="ipaddr" class="form-control" type="text" placeholder="" aria-label="" disabled>
+      </div>
 
       <div class="mb-3 enterBtn">
         <button id="enterBtn" type="button" class="btn btn-dark">Entrar</button>
@@ -28,6 +32,11 @@
     var socket = io.connect('http://' + document.domain + ':' + location.port);
     
     var enter_socket = io('http://' + document.domain + ':' + location.port + '/enter');
+
+    enter_socket.on('ip', data => {
+      //alert(data.ip);
+      $('#ipaddr').val(data.ip);
+    });
 
     $("#enterBtn").on('click', e => {
       if (!$('#username').val()) {

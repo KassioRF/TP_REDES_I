@@ -71,10 +71,7 @@ function open_chat_window(client) {
     });
 
   }
-  // else {
-  //   // abre a janela existente
-  //   console.log('retorna o chat existente');
-  // }
+
 }
 
 /** cria uma nova janela */
@@ -127,7 +124,6 @@ function append_msg(client, msg, date, type) {
   el = document.querySelectorAll(`[data=${client}]`);
 
   if (el.length == 0) {
-    //alert(`${client} new msg!`);
     notify_new_msg(client);
   }
 
@@ -148,9 +144,6 @@ function notify_new_msg(client) {
   el.attr('data-notify', qtd);
   el.html(qtd);
 
-
-
-  //<span class="notify-dot badge bg-danger rounded-pill" data-notify=""></span>
 }
 
 function create_msg_element(msg_, date_, type) {
@@ -170,6 +163,5 @@ function create_msg_element(msg_, date_, type) {
   div.append(date);
 
   return div;
-
 
 }

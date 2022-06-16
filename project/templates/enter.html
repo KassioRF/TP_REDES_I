@@ -29,15 +29,17 @@
   </section>
 
   <script>
+
     var socket = io.connect('http://' + document.domain + ':' + location.port);
     
     var enter_socket = io('http://' + document.domain + ':' + location.port + '/enter');
 
+    //Obtém o ip local
     enter_socket.on('ip', data => {
-      //alert(data.ip);
       $('#ipaddr').val(data.ip);
     });
 
+    // envia a solicitação de registro
     $("#enterBtn").on('click', e => {
       if (!$('#username').val()) {
         alert('Insira um nome para entrar');
@@ -47,6 +49,7 @@
     
     });
 
+    // Se o cliente for registrado, é redirecionado para o lobby
     enter_socket.on('enter', msg => {
       window.location = msg.url;
     });

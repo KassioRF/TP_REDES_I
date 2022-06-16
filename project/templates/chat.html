@@ -31,14 +31,19 @@
     /*--- Inicializa conexão via socket ----- */
     var socket = io.connect('http://' + document.domain + ':' + location.port);
     var lobby_socket = io('http://' + document.domain + ':' + location.port + '/lobby');
+    
     /*--- nome do usuário cliente ----*/
     var username = {{username|tojson}};
     var clients  = {{clients|tojson}};
 
     /*--- atualiza conexão do cliente ----*/
-    lobby_socket.emit('connect_lobby', "{{username}}")
+    lobby_socket.emit('connect_lobby', "{{username}}");
+    lobby_socket.on('client_room', data => {
+      console.log(data);
+      $('#client_ip').html(data.ip)
+    })
     
-    /*--- recebe a atualização do servidor com a lista de usuários ativos ----*/
+    /*--- recebe atualizações do servidor com a lista de usuários ativos ----*/
     lobby_socket.on('update', data => {
       update_lobby(data.clients, username);   
       if (data.disconected){
@@ -53,9 +58,6 @@
       if (msg == '') {
         return 0;
       }
-
-      console.log('click');
-      console.log(msg);
       
       lobby_socket.emit('send_message', {'client': client, 'message': msg, 'date': date});
       
@@ -67,7 +69,6 @@
 
     /*---- Trata as msgs recebidas pelo cliente  ----*/
     lobby_socket.on('new_message', data => {
-      //alert(msg);
       append_msg(data.client, data.msg, data.date, 'recieve');
     });
 

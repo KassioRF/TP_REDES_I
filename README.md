@@ -31,7 +31,9 @@ Navegar até o diretório raiz do projeto, e seguir os passos a seguir.
 
 - Executar a aplicação web:
 
+  No diretório de app.py
+  
   ``
-  $ python manage.py runserver --- alterar pro flask depois
+  $ python .\app.py
   ``
 

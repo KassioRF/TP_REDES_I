@@ -1,6 +1,10 @@
-# TP_REDES_I
+# CSI301TP: Interface de Sockets
 
+## CSI301 - Redes de Computadores I :: 2021.1
 
+Tema: Aplicação web de mensagens instantâneas por meio de Sockets.
+
+Este projeto consiste na implementação de um programa cliente/servidor simples, utilizando a interface de sockets para criar uma versão simplificada de uma aplicação se comunicando em rede.
 
 ## Requisitos:
 
